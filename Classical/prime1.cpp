@@ -10,25 +10,20 @@ int main()
 		cin>>t;
 		vector<int> primes;
 		sieve(primes);
-		while(t--)
-		{
+		while(t--){
 			int n,m;
 			cin>>m>>n;
-			if(m==1)
-			{
-				if(m==n)
-				{
+			if(m==1){
+				if(m==n){
 					cout<<endl;
 					continue;
 				} 
-				else 
-				{
+				else{
 					m = 2;
 				}
 					
 			}
-			for(int i = m; i<=n;i++)
-			{
+			for(int i = m; i<=n;i++){
 				bool isPrime = true;
 				for(int j=0;j<primes.size() && primes[j] < i;j++){
 					if((i%primes[j]) == 0)
@@ -44,28 +39,26 @@ int main()
 		return 0;
 }
 
-void sieve(vector<int>& primes)
-{
+void sieve(vector<int>& primes){
 	int MAX_VALUE = 31623;
 	vector<bool> numbers(MAX_VALUE,false);
-	for(int p=2;p<=MAX_VALUE;)
-	{
+	for(int p=2;p<MAX_VALUE;){
 		primes.push_back(p);
 		
-		for(int i=2;(i*p)<MAX_VALUE;i++)
-		{
+		for(int i=2;(i*p) < MAX_VALUE;i++){
 			numbers[i*p] = true;
 		}
 		
-		int ptemp = p;
+		int ptemp = ++p;
 		
-		do 
-		{
-			ptemp++;
-			
-		}while(ptemp < MAX_VALUE && numbers[ptemp] != false);
+		while(ptemp < MAX_VALUE && numbers[ptemp] != false){
+				ptemp++;
+		}
 		
 		p = ptemp;
+		//cout<<p<<endl;
 	}
+	
+	//cout<<primes.size()<<endl;
 	
 }

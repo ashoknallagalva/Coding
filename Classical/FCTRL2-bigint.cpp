@@ -2,6 +2,13 @@
 
 using namespace std;
 
+void printVector(vector<short>& a){
+		for(int i=0;i<a.size();i++){
+			cout<<a[i];
+			}
+		cout<<endl;
+	}
+
 // add two big integers in the form of vectors of short type.
 // given vectors a and b addition operation will be performed and results will be stored in vector res.
 // the order a and b does not mater.
@@ -29,7 +36,42 @@ void bigIntAdd(vector<short>& a, vector<short>& b, vector<short>& res){
 	}
 
 void bigIntMul(vector<short>& a,vector<short>& b, vector<short>& res){
+		if(a.size() < b.size())
+			swap(a,b);
 		
+		vector<short> interSum,temp;
+		for(int bIndex = b.size()-1; bIndex >=0; bIndex--){
+			int carry = 0;
+			vector<short> mulVector,temp;
+			
+			//place value adjestment
+			for(int i = ((b.size()-1)-bIndex); i>0;i--)
+				mulVector.push_back(0);
+				
+			for(int aIndex = a.size()-1;aIndex>=0;aIndex--){
+					int mulValue;
+					mulValue = (a[aIndex] * b[bIndex]) + carry;
+					carry = mulValue/10;
+					mulVector.push_back(mulValue % 10);					
+				}
+			if(carry!=0)
+				mulVector.push_back(carry);
+			reverse(mulVector.begin(),mulVector.end());
+			bigIntAdd(mulVector,interSum,temp);
+			interSum = temp;			
+			}
+		
+		for(int i=0;i<interSum.size();i++)
+			res.push_back(interSum[i]);
+		
+	}
+	
+void convertIntToVectorShort(int a,vector<short>& res){
+		while(a){
+				res.push_back(a%10);
+				a=a/10;
+			}
+		reverse(res.begin(),res.end());
 	}
 
 int main(){
@@ -38,18 +80,31 @@ int main(){
 		a.push_back(2);
 		a.push_back(9);
 		a.push_back(1);
-		a.push_back(2);
-		a.push_back(9);
+		//a.push_back(2);
+		//a.push_back(9);
 		b.push_back(2);
 		b.push_back(3);
 		b.push_back(1);
 		b.push_back(2);
-		b.push_back(9);
+		//b.push_back(9);		
+		//bigIntAdd(b,a,res);
+		//bigIntMul(a,b,res);
 		
-		bigIntAdd(b,a,res);
-		for(int i=0;i<res.size();i++){
-			cout<<res[i];
+		//printVector(res);
+		//cout<<endl;
+		
+		vector<vector<short> > ansTabel;
+		vector<short> initial;
+		initial.push_back(1);
+		ansTabel.push_back(initial);
+		for(int i=1;i<=100;i++){
+				vector<short> res;
+				vector<short> a;
+				convertIntToVectorShort(i,a);
+				bigIntMul(a,ansTabel[i-1],res);
+				printVector(res);
+				ansTabel.push_back(res);					
 			}
-		cout<<endl;
+		
 		
 	}

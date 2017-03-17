@@ -13,10 +13,10 @@ void printVector(vector<short>& a){
 // given vectors a and b addition operation will be performed and results will be stored in vector res.
 // the order a and b does not mater.
 // complexity O(n) (where n the size of result)
-void bigIntAdd(vector<short>& a, vector<short>& b, vector<short>& res){
+void bigIntAdd(vector<short>& x, vector<short>& y, vector<short>& res){
 	
-		if(a.size() < b.size())
-			swap(a,b);
+		vector<short> &a = x.size()<y.size()?y:x;
+		vector<short> &b = x.size()<y.size()?x:y;
 		
 		int aSize = a.size(), bSize = b.size(),carry = 0, aIndex = aSize-1;
 		
@@ -35,9 +35,10 @@ void bigIntAdd(vector<short>& a, vector<short>& b, vector<short>& res){
 		reverse(res.begin(),res.end());
 	}
 
-void bigIntMul(vector<short>& a,vector<short>& b, vector<short>& res){
-		if(a.size() < b.size())
-			swap(a,b);
+void bigIntMul(vector<short>& x,vector<short>& y, vector<short>& res){
+	
+		vector<short> &a = x.size()<y.size()?y:x;
+		vector<short> &b = x.size()<y.size()?x:y;
 		
 		vector<short> interSum,temp;
 		for(int bIndex = b.size()-1; bIndex >=0; bIndex--){
@@ -74,25 +75,8 @@ void convertIntToVectorShort(int a,vector<short>& res){
 		reverse(res.begin(),res.end());
 	}
 
-int main(){
-		vector<short> a,b,res;
-		a.push_back(1);
-		a.push_back(2);
-		a.push_back(9);
-		a.push_back(1);
-		//a.push_back(2);
-		//a.push_back(9);
-		b.push_back(2);
-		b.push_back(3);
-		b.push_back(1);
-		b.push_back(2);
-		//b.push_back(9);		
-		//bigIntAdd(b,a,res);
-		//bigIntMul(a,b,res);
-		
-		//printVector(res);
-		//cout<<endl;
-		
+int main(){		
+	
 		vector<vector<short> > ansTabel;
 		vector<short> initial;
 		initial.push_back(1);
@@ -102,9 +86,16 @@ int main(){
 				vector<short> a;
 				convertIntToVectorShort(i,a);
 				bigIntMul(a,ansTabel[i-1],res);
-				printVector(res);
-				ansTabel.push_back(res);					
+				ansTabel.push_back(res);				
 			}
 		
+		int t;
+		cin>>t;
+		while(t--){
+				int n;
+				cin>>n;
+				printVector(ansTabel[n]);			
+		}
 		
+		return 0;
 	}

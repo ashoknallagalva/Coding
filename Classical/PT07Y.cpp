@@ -37,7 +37,13 @@ int main(){
 				q.push(*it);
 			}
 			visited[k] = true;				
-		}
+	}
+	for(int i=1;i<=n;i++){
+			if(!visited[i]){
+				cout<<"NO"<<endl;
+				return 0;
+			}
+	}
 	cout<<"YES"<<endl;
 	return 0;
 }

@@ -1,0 +1,9 @@
+//big integer operations on vector of short 
+//and it includes string of integer to vector of short convertion functions also
+
+#include<iostream>
+#include<algorithm>
+#include<vector>
+
+using namespace std;
+
